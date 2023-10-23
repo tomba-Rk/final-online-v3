@@ -1,0 +1,49 @@
+/* Style for the calculator keypad container */
+.btn__container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Background color for the keypad */
+    padding: 20px 0; /* Padding at the top and bottom */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    z-index: 1; /* Lower z-index for buttons */
+}
+
+/* Style for calculator buttons */
+.btn-key {
+    width: 85px;
+    height: 85px;
+    font-size: 24px;
+    margin: 5px;
+    background-color: #fff;
+    color: #333; /* Text color for the buttons */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+/* Hover effect for calculator buttons */
+.btn-key:hover {
+    background-color: #f0f0f0; /* Background color on hover */
+}
+
+.modal {
+    width: 400px;
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Higher z-index for the modal */
+    height: 100vh;
+}

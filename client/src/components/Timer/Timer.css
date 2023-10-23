@@ -1,0 +1,18 @@
+.timer {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .timer-display {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
