@@ -71,7 +71,7 @@ router.post('/paymentverification', async (req, res) => {
     console.log('userUid', userUid);
     
     res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+      `https://online-lagw.netlify.app/paymentsuccess?reference=${razorpay_payment_id}`
     );
   } else {
     res.status(400).json({
