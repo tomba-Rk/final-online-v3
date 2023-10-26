@@ -11,7 +11,7 @@ const Payment = ({ user }) => {
   };
 
   const verifyPaymentWithServer = async (amount) => {
-    const response = await axios.post("http://localhost:4000/api/paymentverification", { amount });
+    const response = await axios.post("https://final-project-online-v4.onrender.com/api/paymentverification", { amount });
     if (response.data && response.data.success) {
         return true;
     }
@@ -47,8 +47,8 @@ const Payment = ({ user }) => {
   const handlePayment = async (amount) => {
     setLoading(true);
     try {
-      const { data: { key } } = await axios.get("http://localhost:4000/api/getKey");
-      const response = await axios.post("http://localhost:4000/api/create-order", { amount });
+      const { data: { key } } = await axios.get("https://final-project-online-v4.onrender.com/api/getKey");
+      const response = await axios.post("https://final-project-online-v4.onrender.com/api/create-order", { amount });
 
       
 
@@ -63,7 +63,7 @@ const Payment = ({ user }) => {
           description: "Tutorial of RazorPay",
           image: "https://avatars.githubusercontent.com/u/25058652?v=4",
           order_id: order.id,
-          callback_url: `http://localhost:4000/api/paymentverification?user_uid=${userId}`,
+          callback_url: `https://final-project-online-v4.onrender.com/api/paymentverification?user_uid=${userId}`,
           prefill: {
             name: "Gaurav Kumar",
             email: "gaurav.kumar@example.com",

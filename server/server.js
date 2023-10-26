@@ -9,13 +9,17 @@ const app = express();
 
 // Middleware setup
 app.use(cors({
-  origin:["http://localhost:3000",]
+  origin:["http://localhost:3000","https://final-project-online-v4.onrender.com"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', apiRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+})
 
 app.get('/api/getKey',(req, res)=>{
   res.status(200).json({key: process.env.RAZORPAY_KEY_ID})
