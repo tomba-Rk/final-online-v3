@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware setup
 app.use(cors({
-  origin:["http://localhost:3000","https://final-project-online-v4.onrender.com"]
+  origin:["http://localhost:3000","https://final-project-online-v4.onrender.com","https://online-lagw.netlify.app"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
