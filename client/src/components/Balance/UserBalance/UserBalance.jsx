@@ -31,15 +31,15 @@ const UserBalance = ({ user,finalArrResult }) => {
     
     console.log("lenght ",finalArrResult.length);
     return (
-        <div>
-            <h3>User Balance: {userBalanceShow}</h3>
-            {showController && (
-                <div>
-                    {/* Whatever content you want to show when balance <= 0 */}
-                    <p>Your balance is zero or negative. Please top-up!</p>
-                </div>
-            )}
-        </div>
+        <div className="user-balance-container border-4 border-black p-4 rounded-none bg-gray-200 shadow-md">
+        <h3 className="user-balance-title text-gray-800 text-2xl font-bold">User Balance: {userBalanceShow}</h3>
+        {showController && (
+          <div>
+            {/* Whatever content you want to show when balance <= 0 */}
+            <p className="text-gray-800 font-semibold">Your balance is zero or negative. Please top-up!</p>
+          </div>
+        )}
+      </div>
     );
 };
 

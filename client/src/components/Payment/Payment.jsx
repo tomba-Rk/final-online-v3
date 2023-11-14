@@ -4,8 +4,9 @@ import { db } from '../../firebase.js';
 
 const Payment = ({ user }) => {
   const [loading, setLoading] = useState(false);
+  const [amount,setAmount] = useState(0)
 
-  const userId=user.uid;
+  const userId = user.uid;
   const notify = (message, type = 'info') => {
     console.log(`[${type.toUpperCase()}] ${message}`);
   };
@@ -13,7 +14,7 @@ const Payment = ({ user }) => {
   const verifyPaymentWithServer = async (amount) => {
     const response = await axios.post("https://final-project-online-v4.onrender.com/api/paymentverification", { amount });
     if (response.data && response.data.success) {
-        return true;
+      return true;
     }
     console.error("Invalid response from the server:", response);
     return false;
@@ -23,10 +24,10 @@ const Payment = ({ user }) => {
     const userRef = db.collection("Customers").doc(userId); // Assuming you've initialized Firebase's Firestore elsewhere
     const userDoc = await userRef.get();
     if (userDoc.exists) {
-        const currentBalance = userDoc.data().userBalance || 0;
-        const newBalance = currentBalance + amount;
-        await userRef.update({ userBalance: newBalance });
-        return true;
+      const currentBalance = userDoc.data().userBalance || 0;
+      const newBalance = currentBalance + amount;
+      await userRef.update({ userBalance: newBalance });
+      return true;
     }
     return false;
   };
@@ -49,10 +50,7 @@ const Payment = ({ user }) => {
     try {
       const { data: { key } } = await axios.get("https://final-project-online-v4.onrender.com/api/getKey");
       const response = await axios.post("https://final-project-online-v4.onrender.com/api/create-order", { amount });
-
-      
-
-
+  
       if (response.data && response.data.order) {
         const order = response.data.order;
         const options = {
@@ -65,9 +63,9 @@ const Payment = ({ user }) => {
           order_id: order.id,
           callback_url: `https://final-project-online-v4.onrender.com/api/paymentverification?user_uid=${userId}`,
           prefill: {
-            name: "Gaurav Kumar",
-            email: "gaurav.kumar@example.com",
-            contact: "9999999999"
+            name: user.displayName, // Use user's display name
+            email: user.email, // Use user's email
+            contact: user.phoneNumber // Use user's phone number
           },
           notes: {
             "address": "Razorpay Corporate Office"
@@ -76,7 +74,7 @@ const Payment = ({ user }) => {
             "color": "#121212"
           }
         };
-
+  
         const razorpay = new window.Razorpay(options);
         razorpay.on('payment.success', () => {
           onPaymentSuccess(amount);
@@ -95,11 +93,23 @@ const Payment = ({ user }) => {
   };
 
   return (
-    <div>
-      <button onClick={() => handlePayment(30000)} disabled={loading}>
-        {loading ? 'Processing...' : 'Pay'}
-      </button>
-    </div>
+      <div className="w-full max-w-xs">
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter amount"
+          className="appearance-none block w-full bg-white text-black border-4 border-black rounded-none py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-yellow-500"
+        />
+        <button
+          className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-none"
+          onClick={() => handlePayment(amount)}
+          disabled={loading}
+        >
+          {loading ? 'Processing...' : 'Pay'}
+        </button>
+      </div>
+
   );
 };
 
