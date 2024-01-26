@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { db } from '../../firebase.js';
 
+
 const Payment = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [amount,setAmount] = useState(0)
@@ -108,6 +109,7 @@ const Payment = ({ user }) => {
         >
           {loading ? 'Processing...' : 'Pay'}
         </button>
+        
       </div>
 
   );

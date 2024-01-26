@@ -3,7 +3,11 @@ import { useCountdown } from './useCountDown.jsx';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebase.js';
 import { doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
-import moment from 'moment';
+// import moment from 'moment';
+
+// Importing date-fns for consistent date handling
+import { parseISO } from 'date-fns';
+
 
 const ExpiredNotice = () => {
   return (
@@ -24,7 +28,8 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
 };
 
 const Timer = ({
-  setShowDisplayNumBtnOff,
+  setShowDisplayNum,
+  setBtnOff,
   setUserEntries,
   setWin,
   setLose,
@@ -34,32 +39,36 @@ const Timer = ({
   lose,
   win,
 }) => {
-  const [targetTime, setTargetTime] = useState('');
+  // const [targetTime, setTargetTime] = useState('');
+  const [expirationTime, setExpirationTime] = useState('');
   const [balanceUpdated, setBalanceUpdated] = useState(false);
   const [user] = useAuthState(auth); // Added to get current user
   const [loading, setLoading] = useState(true);
+
+  
   useEffect(() => {
     onSnapshot(doc(db, 'RandomNumber', 'test'), (doc) => {
       try {
-        const duration = doc.data().duration;
-        if (duration && duration.toDate) {
-          const newStr = moment(duration.toDate()).format();
-          setTargetTime(newStr);
+        // Fetching expirationTime instead of duration
+        const fetchedExpirationTime = doc.data().expirationTime;
+        console.log(fetchedExpirationTime);
+        if (fetchedExpirationTime) {
+          setExpirationTime(fetchedExpirationTime);
           setBalanceUpdated(false);
         } else {
-          console.error('Invalid timestamp data:', doc.data().duration);
+          console.error('Invalid timestamp data:', doc.data().expirationTime);
            // Set error state (optional)
         }
       } catch (err) {
         console.error('An error occurred:', err);
         // Set error state (optional)
       } finally {
-        setLoading(false);  // Set loading to false once data is fetched or an error occurs
+        setLoading(false);
       }
     });
   }, []);
 
-  const [days, hours, minutes, seconds] = useCountdown(targetTime);
+  const [days, hours, minutes, seconds] = useCountdown(parseISO(expirationTime)); // Parsing the ISO string
 
   useEffect(() => {
     if (
@@ -75,7 +84,7 @@ const Timer = ({
       getDoc(userRef)
         .then((snapshot) => {
           const currentBalance = snapshot.data().userBalance || 0;
-          const increaseAmount = ((finalArrResult.length * 3) * 10); // Adjust as per your logic
+          const increaseAmount = (finalArrResult.length * 10); // Adjust as per your logic
           const updatedBalance = currentBalance + increaseAmount;
 
           return updateDoc(userRef, { userBalance: updatedBalance });
@@ -87,9 +96,9 @@ const Timer = ({
           console.error('Error:', error);
         });
     }
-  }, [minutes, seconds, user, balanceUpdated, win]);
+  }, [minutes, seconds, user, balanceUpdated, win,finalArrResult.length]);
 
-  if (minutes === 0 && seconds < 5) {
+  if (minutes === 0 && seconds < 2) {
     setUserEntries([]);
     setLose([]);
     setWin([]);
@@ -100,10 +109,15 @@ const Timer = ({
     setShowResult(false);
   }
 
-  if ((minutes === 0 && seconds < 30) && (!loading)) {
-    setShowDisplayNumBtnOff(true);
+  if ((minutes === 0 && seconds < 40) && (!loading)&&( !isNaN(minutes)) &&(!isNaN(seconds))) {
+    setBtnOff(true);
   } else {
-    setShowDisplayNumBtnOff(false);
+    setBtnOff(false);
+  }
+  if ((minutes === 0 && seconds < 25) && (!loading) &&( !isNaN(minutes)) &&(!isNaN(seconds))) {
+    setShowDisplayNum(true);
+  } else {
+    setShowDisplayNum(false);
   }
 
   if (days + hours + minutes + seconds <= 0) {

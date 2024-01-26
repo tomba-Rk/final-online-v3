@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase.js';
 import { doc, onSnapshot } from 'firebase/firestore';
+import svg1 from '../../assets/svg-v1.svg';
+import svg2 from '../../assets/svg-v2.svg';
+import svg3 from '../../assets/svg-v3.svg';
+import svg4 from '../../assets/svg-v4.svg';
+import svg5 from '../../assets/test-svg5.svg';
+import svg6 from '../../assets/svg-6.svg';
 
 const DisplayNum = ({
-  showDisplayNumBtnOff,
+  showDisplayNum,
   userEntries,
   showResult,
   finalArrResult,
@@ -16,6 +22,15 @@ const DisplayNum = ({
 }) => {
   const [randomNum, setRandomNum] = useState([1, 2, 3, 4, 5, 6]);
 
+  const svgArrObj=[
+    {id:1,svg:svg1},
+    {id:2,svg:svg2},
+    {id:3,svg:svg3},
+    {id:4,svg:svg4},
+    {id:5,svg:svg5},
+    {id:6,svg:svg6},
+  ]
+
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, 'RandomNumber', 'test'), (doc) => {
         const data = doc.data()?.data || [];
@@ -26,14 +41,35 @@ const DisplayNum = ({
 
   useEffect(() => {
     const arrNew = Object.values(randomNum);
+    console.log(arrNew);
     const duplicates = arrNew.filter((value, index, self) => self.indexOf(value) !== index);
 
-    const newFinalArrResult = duplicates.reduce((accumulator, duplicateValue) => {
+    const newSet =new Set(duplicates);
+    
+    console.log("newSet",newSet);
+    
+    const convertedArr= [...newSet]
+    let newFilter=[]
+    let array1=[]
+    convertedArr.forEach((num)=>{
+        console.log("con",num)
+        newFilter=arrNew.filter((el)=>{
+        return num === el
+    })
+    for(let i = 0; i < newFilter.length; i++) {
+        array1.push(newFilter[i])
+      }
+    })
+    const newFinalArrResult = array1.reduce((accumulator, duplicateValue) => {
         const matchingPrices = userEntries.filter((price) => price === duplicateValue);
         return accumulator.concat(matchingPrices);
     }, []);
 
-    setFinalArrResult(newFinalArrResult);
+    
+    console.log("userenteries",userEntries)
+
+    const winningArray =  newFinalArrResult.concat(userEntries.filter((el) => newFinalArrResult.includes(el)));
+    setFinalArrResult(winningArray);
 
     setWin(userEntries.filter((el) => newFinalArrResult.includes(el)));
     setLose(userEntries.filter((el) => !newFinalArrResult.includes(el)));
@@ -43,12 +79,20 @@ const DisplayNum = ({
   console.log('win', win);
   console.log('loss', lose);
 
+  const getSvgContentById = (id) => {
+    const svgObj = svgArrObj.find((obj) => obj.id === id);
+    return svgObj ? svgObj.svg : null;
+  };
+
   return (
     <div className="displayNum__container flex flex-row justify-center text-center">
-    {showDisplayNumBtnOff ? (
+    {showDisplayNum ? (
       Object.values(randomNum).map((el, index) => (
         <div key={index} className="displayNum-key text-4xl mx-2">
-          {el}
+          <img style={{
+              width:"50px",
+              height:"50px"
+            }} src={getSvgContentById(el)} alt="test"/>
         </div>
       ))
     ) : (

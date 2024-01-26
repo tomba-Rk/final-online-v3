@@ -29,8 +29,7 @@ export default function Dashboard() {
     return (
       <div className="flex flex-col h-screen">
         <Navbar user={user}/>
-        <div className="flex-grow flex items-center justify-center  bg-gradient-to-r 
-                    from-green-400 to-blue-500 ">
+        <div className="flex-grow flex items-center justify-center bg-gradient-to-r from-custom-purple to-custom-purple">
           <div className="text-center">
             <Game  />
 

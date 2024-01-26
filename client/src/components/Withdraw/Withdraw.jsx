@@ -62,7 +62,7 @@ const Withdraw = ({ userId }) => {
     const result = await updateUserBalanceInFirestore(withdrawAmount, number);
     setMessage(result
       ? 'Withdrawal successful. Your balance has been updated.'
-      : 'Failed to update user balance.'
+      : 'Failed to withdraw .Please check your withdrawal amount.'
     );
     // Reset fields after successful withdrawal
     if (result) {

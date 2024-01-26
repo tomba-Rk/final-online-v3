@@ -6,13 +6,13 @@ import Withdraw from './components/Withdraw/Withdraw';
 import UserProfile from './components/UserProfile/UserProfile';
 import PhotoComponent from './components/PhotoRecharge/PhotoRecharge';
 
-
 function App() {
   return (
     <div className="flex flex-col items-center h-screen">
       <div className="flex-grow flex items-center justify-center w-full max-w-screen-md">
         <Routes>
           <Route index element={<Login/>}/>
+          <Route path="/signup" element={<Login/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/paymentsuccess" element={<PaymentSuccess/>}/>
           <Route path="/withdraw" element={<Withdraw/>} />

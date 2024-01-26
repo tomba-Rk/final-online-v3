@@ -1,7 +1,7 @@
 const { generateOTP } = require('../utils/helpers');
 const addData = require('../db/dataService');
 
-let startingTime = 0;
+let startingTime = 120;
 
 const updateTime = () => {
     startingTime--;

@@ -16,7 +16,8 @@ import PhotoComponent from '../PhotoRecharge/PhotoRecharge.jsx';
 
 
 const Game = () => {
-  const [showDisplayNumBtnOff, setShowDisplayNumBtnOff] = useState(false);
+  const [showDisplayNum, setShowDisplayNum] = useState(false);
+  const [btnOff, setBtnOff] = useState(false);
   const [userEntries, setUserEntries] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [user, loading] = useAuthState(auth);
@@ -35,8 +36,12 @@ const Game = () => {
                     flex flex-col gap-6 items-center" 
                     style={{ maxWidth: '100%' }}>
     {/* <div className="flex flex-col gap-6 items-center relative"> */}
+    <UserBalance
+          user={user}
+          finalArrResult={finalArrResult}
+        />
         <DisplayNum
-          showDisplayNumBtnOff={showDisplayNumBtnOff}
+          showDisplayNum={showDisplayNum}
           userEntries={userEntries}
           win={win}
           lose={lose}
@@ -49,16 +54,14 @@ const Game = () => {
           setWinLossStatus={setWinLossStatus}
         />
         {/* <SelectedNum /> */}
-        <UserBalance
-          user={user}
-          finalArrResult={finalArrResult}
-        />
+        
         <Buttons
-          showDisplayNumBtnOff={showDisplayNumBtnOff}
+          btnOff={btnOff}
           setUserEntries={setUserEntries}
         />
         <Timer
-          setShowDisplayNumBtnOff={setShowDisplayNumBtnOff}
+          setShowDisplayNum={setShowDisplayNum}
+          setBtnOff={setBtnOff}
           setUserEntries={setUserEntries}
           setShowResult={setShowResult}
           setWin={setWin}
