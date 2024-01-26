@@ -24,28 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/getKey',(req, res)=>{
   res.status(200).json({key: process.env.RAZORPAY_KEY_ID})
-} )
-
-const sendEmail = require('./sendEmail/sendEmail.js');
-
-app.post('/send-email', async (req, res) => {
-  const { to, subject, text } = req.body;
-
-  let mailOptions = {
-    from: process.env.EMAIL,
-    to,
-    subject,
-    text
-  };
-
-  try {
-    const result = await sendEmail(mailOptions);
-    res.status(result.status).send({ message: result.message });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: 'An error occurred while sending the email' });
-  }
-});
+})
 
 
 // Central error handler
