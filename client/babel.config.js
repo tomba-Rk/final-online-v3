@@ -1,9 +1,9 @@
 module.exports = {
     presets: ['react-app'],
-    "plugins": [    [
+    "plugins": [    
       "@babel/plugin-transform-react-jsx",
       {
-        throwIfNamespace: false
+        "throwIfNamespace": true
       }
-    ]],
+    ],
   };
