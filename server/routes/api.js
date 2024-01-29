@@ -93,7 +93,7 @@ router.post('/create-referral', async (req, res) => {
       referrals: []
   });
 
-  res.json({ referralLink:  `${origin}/signup?ref=${referralId}`});
+  res.json({ referralLink:  `https://sixdraw.in/signup?ref=${referralId}`});
 });
 
 
