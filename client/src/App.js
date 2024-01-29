@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard';
 import PaymentSuccess from './components/Payment/PaymentSuccess';
 import Withdraw from './components/Withdraw/Withdraw';
 import UserProfile from './components/UserProfile/UserProfile';
-import PhotoComponent from './components/PhotoRecharge/PhotoRecharge';
+import PhotoRecharge from './components/PhotoRecharge/PhotoRecharge';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/paymentsuccess" element={<PaymentSuccess/>}/>
           <Route path="/withdraw" element={<Withdraw/>} />
-          <Route path="/recharge" element={<PhotoComponent/>} />
+          <Route path="/recharge" element={<PhotoRecharge/>} />
           <Route path="/userprofile" element={<UserProfile/>} />
         </Routes>
       </div>

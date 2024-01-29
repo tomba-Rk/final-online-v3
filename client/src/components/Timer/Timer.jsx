@@ -51,12 +51,12 @@ const Timer = ({
       try {
         // Fetching expirationTime instead of duration
         const fetchedExpirationTime = doc.data().expirationTime;
-        console.log(fetchedExpirationTime);
+        // console.log(fetchedExpirationTime);
         if (fetchedExpirationTime) {
           setExpirationTime(fetchedExpirationTime);
           setBalanceUpdated(false);
         } else {
-          console.error('Invalid timestamp data:', doc.data().expirationTime);
+          console.error('Invalid timestamp data:now', doc.data().expirationTime);
            // Set error state (optional)
         }
       } catch (err) {
@@ -96,14 +96,14 @@ const Timer = ({
           console.error('Error:', error);
         });
     }
-  }, [minutes, seconds, user, balanceUpdated, win,finalArrResult.length]);
+  }, [minutes, seconds, user, balanceUpdated]);
 
   if (minutes === 0 && seconds < 2) {
     setUserEntries([]);
     setLose([]);
     setWin([]);
   }
-  if (minutes === 0 && seconds < 10) {
+  if ((minutes === 0 && seconds < 10) && (!loading)&&( !isNaN(minutes)) &&(!isNaN(seconds))) {
     setShowResult(true);
   } else {
     setShowResult(false);

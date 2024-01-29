@@ -80,8 +80,8 @@ const Buttons = ({ btnOff, setUserEntries }) => {
     e.preventDefault();
 
     const totalCost = counter * ticketPrice;
-    console.log(totalCost);
-    console.log(userBalance);
+    // console.log(totalCost);
+    // console.log(userBalance);
 
     if (selectedNum === null) {
       alert('Please select a number before submitting.');

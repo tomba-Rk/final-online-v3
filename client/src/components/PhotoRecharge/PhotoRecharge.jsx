@@ -1,10 +1,10 @@
 import React from 'react';
-import photo from '../../images/photo.jpg'; // Adjust the path to where you've saved your image
+// import photo from '../../images/photo.jpg'; // Adjust the path to where you've saved your image
 import { Link } from 'react-router-dom'; // Import Link from React Router
-const PhotoComponent = () => {
+const PhotoRecharge = () => {
   return (
     <div className="mx-auto flex flex-col items-center w-full">
-  <img src={photo} alt="A Display" className="w-full h-auto" />
+  {/* <img src={photo} alt="A Display" className="w-full h-auto" /> */}
   <p className="text-center my-4">
     After making the payment, Send the transaction ID to this number 
     <span className="block font-bold text-lg mt-2">6377883992</span>
@@ -17,4 +17,4 @@ const PhotoComponent = () => {
   );
 };
 
-export default PhotoComponent;
+export default PhotoRecharge;

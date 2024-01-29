@@ -13,13 +13,13 @@
     "date-fns": "^3.2.0",
     "firebase": "^10.4.0",
     "moment": "^2.29.4",
-    "razorpay": "^2.9.2",
+    "razorpay": "^0.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "tailwindcss": "^3.3.5",
     "web-vitals": "^2.1.4"
   },
@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-react-jsx": "^7.23.4"
+    "@babel/plugin-transform-react-jsx": "^7.23.4",
+    "@babel/preset-react": "^7.23.3"
   }
 }

@@ -11,15 +11,15 @@ const UserBalance = ({ user,finalArrResult }) => {
         if (user && user.uid) {
             const unsubscribe = onSnapshot(doc(db, "Customers", user.uid), (doc) => {
                 let newInput = doc.data()?.userBalance;
-                console.log("Current data: ", newInput);
-                console.log("newInput type:", typeof (newInput));
+                // console.log("Current data: ", newInput);
+                // console.log("newInput type:", typeof (newInput));
                 setUserBalanceShow(newInput);
                 if (newInput <= 0) {
                     setShowController(true);
-                    console.log("first");
+                    // console.log("first");
                 } else {
                     setShowController(false);
-                    console.log("seconds");
+                    // console.log("seconds");
                 }
             });
 
@@ -29,7 +29,7 @@ const UserBalance = ({ user,finalArrResult }) => {
     }, [user]);
 
     
-    console.log("lenght ",finalArrResult.length);
+    // console.log("lenght ",finalArrResult.length);
     return (
         <div className="user-balance-container bg-gray-800 p-4 rounded-lg shadow-md max-w-xs mx-auto">
         <div className="flex flex-col justify-between mb-4">

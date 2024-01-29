@@ -1,9 +1,12 @@
-module.exports = {
-    presets: ['react-app'],
-    "plugins": [    
+module.exports ={
+  "plugins": [
+    [
       "@babel/plugin-transform-react-jsx",
       {
-        "throwIfNamespace": true
+        "throwIfNamespace": false, // defaults to true
+        "runtime": "automatic", // defaults to classic
+        "importSource": "custom-jsx-library" // defaults to react
       }
-    ],
-  };
+    ]
+  ]
+}

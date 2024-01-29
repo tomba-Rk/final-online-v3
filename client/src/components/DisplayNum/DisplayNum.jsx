@@ -41,18 +41,18 @@ const DisplayNum = ({
 
   useEffect(() => {
     const arrNew = Object.values(randomNum);
-    console.log(arrNew);
+    // console.log(arrNew);
     const duplicates = arrNew.filter((value, index, self) => self.indexOf(value) !== index);
 
     const newSet =new Set(duplicates);
     
-    console.log("newSet",newSet);
+    // console.log("newSet",newSet);
     
     const convertedArr= [...newSet]
     let newFilter=[]
     let array1=[]
     convertedArr.forEach((num)=>{
-        console.log("con",num)
+        // console.log("con",num)
         newFilter=arrNew.filter((el)=>{
         return num === el
     })
@@ -66,7 +66,7 @@ const DisplayNum = ({
     }, []);
 
     
-    console.log("userenteries",userEntries)
+    // console.log("userenteries",userEntries)
 
     const winningArray =  newFinalArrResult.concat(userEntries.filter((el) => newFinalArrResult.includes(el)));
     setFinalArrResult(winningArray);
@@ -75,9 +75,9 @@ const DisplayNum = ({
     setLose(userEntries.filter((el) => !newFinalArrResult.includes(el)));
   }, [randomNum, userEntries]);
 
-  console.log('finalArr', finalArrResult);
-  console.log('win', win);
-  console.log('loss', lose);
+  // console.log('finalArr', finalArrResult);
+  // console.log('win', win);
+  // console.log('loss', lose);
 
   const getSvgContentById = (id) => {
     const svgObj = svgArrObj.find((obj) => obj.id === id);
