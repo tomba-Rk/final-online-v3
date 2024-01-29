@@ -114,7 +114,7 @@ const Timer = ({
   } else {
     setBtnOff(false);
   }
-  if ((minutes === 0 && seconds < 25) && (!loading) &&( !isNaN(minutes)) &&(!isNaN(seconds))) {
+  if ((minutes === 0 && seconds < 25 && seconds !==0 && seconds !==1 ) && (!loading) &&( !isNaN(minutes)) &&(!isNaN(seconds))) {
     setShowDisplayNum(true);
   } else {
     setShowDisplayNum(false);
