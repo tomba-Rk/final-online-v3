@@ -7,12 +7,12 @@ import {getFirestore} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCtilH1r8v03Bdx6pLn_YOMm-ugjhJ9rx0",
-  authDomain: "online-game-v1.firebaseapp.com",
-  projectId: "online-game-v1",
-  storageBucket: "online-game-v1.appspot.com",
-  messagingSenderId: "427082120768",
-  appId: "1:427082120768:web:d12c58ac85728cb39ae9a5"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
