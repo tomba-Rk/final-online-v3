@@ -28,7 +28,7 @@ const Login = () => {
 
   const generateReferralLink = async (userId) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/create-referral', { userId: userId,origin: window.location.origin });
+      const response = await axios.post('http://localhost:4001/api/create-referral', { userId: userId,origin: window.location.origin });
       // setReferralLink(response.data.referralLink);
       console.log(response.data.referralLink);
       setError('');
@@ -62,7 +62,7 @@ const Login = () => {
         const referralId = getReferralIdFromUrl();
         if (referralId) {
           // Send referral ID to backend for verification
-          const verifyResponse = await axios.post('http://localhost:4000/api/verifyReferral', {
+          const verifyResponse = await axios.post('http://localhost:4001/api/verifyReferral', {
             newUser: result.user.uid,
             referralId: referralId
           });
