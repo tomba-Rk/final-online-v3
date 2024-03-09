@@ -30,7 +30,7 @@ const Login = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_PRODUCTION_URL}/api/create-referral`, { userId: userId,origin: window.location.origin });
       // setReferralLink(response.data.referralLink);
-      console.log(response.data.referralLink);
+     
       setError('');
       return response.data.referralLink; // Return the referral link
     } catch (err) {
@@ -48,8 +48,7 @@ const Login = () => {
       if (!userDoc.exists()) {
         //generate the referral link
         const referralLink = await generateReferralLink(result.user.uid);
-        // New user, set user data and check for referral
-        console.log(typeof(referralLink))
+        
         await setDoc(userRef, {
           name: result.user.displayName,
           userBalance: 0,
@@ -66,7 +65,7 @@ const Login = () => {
             newUser: result.user.uid,
             referralId: referralId
           });
-          console.log("Referral verification response:", verifyResponse.data);
+          
         }
       }
   

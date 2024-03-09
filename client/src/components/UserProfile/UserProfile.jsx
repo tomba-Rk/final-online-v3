@@ -9,16 +9,23 @@ const UserProfile = () => {
   const [referallink,setReferallink]=useState('');
   const [userBalanceShow, setUserBalanceShow] = useState(null);
   const [award, setAward] = useState(null);
+  const [buttonEnabled, setButtonEnabled] = useState(false); // State to track if the button should be enabled
   const navigate = useNavigate();
   const userPhotoURL = user?.photoURL || 'default-profile-img-url';
+
+  // Effect to enable the button permanently once the condition is met
+  useEffect(() => {
+    if (userBalanceShow >= 200 && !buttonEnabled) {
+      setButtonEnabled(true);
+    }
+  }, [userBalanceShow, buttonEnabled]);
   useEffect(() => {
     if (user && user.uid) {
         const unsubscribe = onSnapshot(doc(db, "Customers", user.uid), (doc) => {
             let newInput = doc.data()?.referralLink;
             let newInputTwo = doc.data()?.userBalance;
             let newInputThree = doc.data()?.award;
-            console.log("Current data: ", newInput);
-            console.log("newInput type:", typeof (newInput));
+        
             setReferallink(newInput);
             setUserBalanceShow(newInputTwo);
             setAward(newInputThree);
@@ -55,21 +62,27 @@ const signOut = () => {
             <div className="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
               <span>Referral link:</span>    
             </div>
-            <div className="flex items-center justify-between bg-blue-500 text-gray-800 py-3 px-4 rounded-lg mt-4 shadow">
-  <div className="overflow-hidden overflow-ellipsis" style={{ maxWidth: "75%" }}>{referallink}</div>
-  <button 
-    className="ml-4 bg-gray-200 text-blue-800 hover:bg-blue-500 hover:text-white font-normal py-2 px-3 rounded transition duration-300 ease-in-out flex items-center"
-    onClick={() => {
-      navigator.clipboard.writeText(referallink);
-      alert('Referral link copied!');
-    }}
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-1M16 4h4v4m0 0h-4V4m4 0L14.5 9.5M18 20H5a2 2 0 01-2-2V7a2 2 0 012-2h4m5 5l4.5 4.5" />
-    </svg>
-    Copy
-  </button>
-</div>
+            {(!buttonEnabled)&&(
+            <div className="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+            <span> Recharge of Rs: 200 for referral link</span>
+          </div>
+            )}
+            
+            {buttonEnabled && (
+              <div className="flex items-center justify-between bg-blue-500 text-gray-800 py-3 px-4 rounded-lg mt-4 shadow">
+              <div className="overflow-hidden overflow-ellipsis" style={{ maxWidth: "75%" }}>{referallink}</div>
+              <button 
+                className="ml-4 bg-gray-200 text-blue-800 hover:bg-blue-500 hover:text-white font-normal py-2 px-3 rounded transition duration-300 ease-in-out flex items-center"
+                onClick={handleCopy}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-1M16 4h4v4m0 0h-4V4m4 0L14.5 9.5M18 20H5a2 2 0 01-2-2V7a2 2 0 012-2h4m5 5l4.5 4.5" />
+                </svg>
+                Copy
+              </button>
+            </div>
+            )}
+            
 <div className="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
               <span>Award: {award}</span>
             </div>

@@ -51,7 +51,7 @@ const Withdraw = ({ userId }) => {
       return;
     }
     const result = await updateUserBalanceInFirestore(withdrawAmount, number);
-    setMessage(result ? 'Withdrawal successful. Your balance has been updated.' : 'Failed to withdraw. Please check your withdrawal amount.');
+    setMessage(result ? 'Pending !! Balance will be updated' : 'Failed to withdraw. Please check your withdrawal amount.');
     if (result) {
       setAmount('');
       setNumber('');
@@ -69,7 +69,7 @@ const Withdraw = ({ userId }) => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-sm font-normal text-gray-700">
-            GPay Number:
+            GPay or Paytm Number:
           </label>
           <input className="w-full px-3 py-2 leading-tight text-gray-700 bg-transparent border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
         </div>

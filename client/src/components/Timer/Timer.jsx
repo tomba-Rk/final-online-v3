@@ -58,7 +58,7 @@ const Timer = ({
       try {
         // Fetching expirationTime instead of duration
         const fetchedExpirationTime = doc.data().expirationTime;
-        // console.log(fetchedExpirationTime);
+    
         if (fetchedExpirationTime) {
           setExpirationTime(fetchedExpirationTime);
           setBalanceUpdated(false);

@@ -7,11 +7,9 @@ import DisplayNum from '../DisplayNum/DisplayNum';
 import UserBalance from '../Balance/UserBalance/UserBalance';
 import SelectedNum from '../SelectedNum/SelectedNum';
 import Wins from '../Wins/Wins';
-import Payment from '../Payment/Payment.jsx';
 import Withdraw from '../Withdraw/Withdraw.jsx';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar.jsx';
-import VibrationComponent from '../VibrationComponent/VibrationComponent.jsx';
 import PhotoComponent from '../PhotoRecharge/PhotoRecharge.jsx';
 
 

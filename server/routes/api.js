@@ -22,7 +22,7 @@ router.post('/create-referral', async (req, res) => {
       referrals: []
   });
 
-  res.json({ referralLink:  `https://online-lagw.netlify.app/signup?ref=${referralId}`});
+  res.json({ referralLink:  `https://sixdraw.in/signup?ref=${referralId}`});
   // res.json({ referralLink:  `http://localhost:3000/signup?ref=${referralId}`});
 });
 
