@@ -85,20 +85,21 @@ const DisplayNum = ({
   };
 
   return (
-    <div className="displayNum__container flex flex-row justify-center text-center">
-    {showDisplayNum ? (
-      Object.values(randomNum).map((el, index) => (
-        <div key={index} className="displayNum-key text-4xl mx-2">
-          <img style={{
-              width:"50px",
-              height:"50px"
-            }} src={getSvgContentById(el)} alt="test"/>
-        </div>
-      ))
-    ) : (
-      <h1 className="text-4xl">Wait for your numbers</h1>
-    )}
-  </div>
+    <div className="displayNum__container flex flex-row justify-center text-center bg-purple-700 py-4 px-8 rounded-lg shadow-xl">
+  {showDisplayNum ? (
+    Object.values(randomNum).map((el, index) => (
+      <div key={index} className="displayNum-key flex items-center justify-center text-4xl mx-0.5 text-white">
+      <span className="inline-flex items-center justify-center p-1 bg-white rounded-full shadow-md">
+        <img className="w-12 h-12" src={getSvgContentById(el)} alt="Number"/>
+      </span>        
+    </div>
+    
+    ))
+  ) : (
+    <h1 className="text-4xl font-bold text-white">Your Luck is on the Way</h1>
+  )}
+</div>
+
   );
 };
 

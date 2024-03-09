@@ -7,6 +7,9 @@ module.exports = {
         colors: {
           'custom-green': '#1FD882',
           'custom-purple': '#8949F5',
+          gold: {
+            500: '#ffd700', // Example gold color HEX code.
+          },
         },
       },
     },

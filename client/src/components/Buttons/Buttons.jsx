@@ -80,8 +80,6 @@ const Buttons = ({ btnOff, setUserEntries }) => {
     e.preventDefault();
 
     const totalCost = counter * ticketPrice;
-    // console.log(totalCost);
-    // console.log(userBalance);
 
     if (selectedNum === null) {
       alert('Please select a number before submitting.');
@@ -122,7 +120,7 @@ const Buttons = ({ btnOff, setUserEntries }) => {
             <button
         key={el}
         disabled={btnOff}
-        className="text-white font-sans text-5xl font-bold p-4 shadow border-none focus:outline-none disabled:opacity-50 flex items-center justify-center h-24 w-full bg-custom-green"
+        className="text-white font-sans text-5xl font-bold p-4 shadow border-none focus:outline-none disabled:opacity-50 flex items-center justify-center h-24 w-full bg-custom-green "
         style={{ borderRadius: '30%' }} // Inline style for 30% border-radius
         type="button"
         onClick={() => openModal(el)}
@@ -157,6 +155,9 @@ const Buttons = ({ btnOff, setUserEntries }) => {
                 <span className="text-2xl font-bold">{counter}</span>
                 <button className={modalButtonClasses} onClick={incrementCounter}>+</button>
               </div>
+              <p className="text-xl font-semibold text-white-400 mb-4">
+                Total Cost: Rs {counter * ticketPrice}
+              </p>    
               <button className={modalSubmitButtonClasses} onClick={putTicket}>Submit</button>
         </div>
       </Modal>

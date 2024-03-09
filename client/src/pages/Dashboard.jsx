@@ -18,12 +18,7 @@ export default function Dashboard() {
 
   if (loading) return <h1>Loading...</h1>;
   
-  // SignOut function to log the user out and navigate to the home page
-  const signOut = () => {
-    auth.signOut().then(() => {
-      navigate('/', { replace: true }); // If you have a separate login route
-    });
-  };
+  
 
   if (user)
     return (
@@ -32,13 +27,6 @@ export default function Dashboard() {
         <div className="flex-grow flex items-center justify-center bg-gradient-to-r from-custom-purple to-custom-purple">
           <div className="text-center">
             <Game  />
-
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-              onClick={signOut}
-            >
-              Sign out
-            </button>
           </div>
         </div>
       </div>

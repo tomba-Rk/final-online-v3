@@ -6,7 +6,7 @@ function HomePage() {
     const [referralLink, setReferralLink] = useState('');
 
     const createReferralLink = async () => {
-        const response = await axios.post('http://localhost:3000/api/create-referral', { userId: 'user123' });
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/create-referral`, { userId: 'user123' });
         setReferralLink(response.data.referralLink);
     };
 

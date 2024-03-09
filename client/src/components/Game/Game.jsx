@@ -27,19 +27,28 @@ const Game = () => {
   const [winLossStatus, setWinLossStatus] = useState(null);
 
   return (
-    <div className="container 
-                    mx-auto 
-                    px-4 
-                    py-8
-                    rounded-none 
-                    relative 
-                    flex flex-col gap-6 items-center" 
-                    style={{ maxWidth: '100%' }}>
-    {/* <div className="flex flex-col gap-6 items-center relative"> */}
-    <UserBalance
+    <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-12">
+      <div className="my-4 md:my-8 lg:my-12">
+        <UserBalance
           user={user}
           finalArrResult={finalArrResult}
         />
+      </div>
+      <div className="my-4 md:my-8 lg:my-12">
+        <Timer
+          setShowDisplayNum={setShowDisplayNum}
+          setBtnOff={setBtnOff}
+          setUserEntries={setUserEntries}
+          setShowResult={setShowResult}
+          setWin={setWin}
+          setLose={setLose}
+          finalArrResult={finalArrResult}
+          winLossStatus={winLossStatus}
+          win={win}
+          lose={lose}
+        />
+      </div>
+      <div className="my-4 md:my-8 lg:my-12">
         <DisplayNum
           showDisplayNum={showDisplayNum}
           userEntries={userEntries}
@@ -53,36 +62,13 @@ const Game = () => {
           setFinalArrResult={setFinalArrResult}
           setWinLossStatus={setWinLossStatus}
         />
-        {/* <SelectedNum /> */}
-        
+      </div>
+      <div className="my-4 md:my-8 lg:my-12">
         <Buttons
           btnOff={btnOff}
           setUserEntries={setUserEntries}
         />
-        <Timer
-          setShowDisplayNum={setShowDisplayNum}
-          setBtnOff={setBtnOff}
-          setUserEntries={setUserEntries}
-          setShowResult={setShowResult}
-          setWin={setWin}
-          setLose={setLose}
-          finalArrResult={finalArrResult}
-          winLossStatus={winLossStatus}
-          win={win}
-          lose={lose}
-        />
-        {/* <Wins win={win} lose={lose} showResult={showResult} /> */}
-        <div className="w-full flex justify-center">
-      {/* <Payment user={user} /> */}
-      <Link to="/recharge" className="bg-blue-500 text-white hover:text-gray-300 font-bold py-2 px-4 border rounded border-black hover:border-gray-300 transition duration-300">
-  Recharge
-</Link>
-    </div>
-    <Link to="/withdraw" className="text-white hover:text-gray-300 font-bold py-2 px-4 border rounded border-white hover:border-gray-300 transition duration-300">
-      Go to Withdraw
-    </Link>
-        {/* <Withdraw userId={user} /> */}
-      {/* </div> */}
+      </div>
     </div>
   );
 };

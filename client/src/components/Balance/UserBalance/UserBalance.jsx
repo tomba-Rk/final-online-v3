@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 // import './UserBalance.css'
 import { db } from '../../../firebase.js';
 import { doc, onSnapshot} from "firebase/firestore";
+import { Link } from 'react-router-dom';
 
 const UserBalance = ({ user,finalArrResult }) => {
     const [userBalanceShow, setUserBalanceShow] = useState(null);
@@ -31,27 +32,34 @@ const UserBalance = ({ user,finalArrResult }) => {
     
     // console.log("lenght ",finalArrResult.length);
     return (
-        <div className="user-balance-container bg-gray-800 p-4 rounded-lg shadow-md max-w-xs mx-auto">
-        <div className="flex flex-col justify-between mb-4">
-          <div className="mb-2" style={{ width: '300px' }}>
-            <p className="user-balance-title text-gray-400 text-sm">Total Balance</p>
-            <h1 className="text-2xl font-bold text-white">${userBalanceShow}</h1>
+        <>
+          <div className="max-w-sm mx-auto">
+            <div className="bg-white shadow-md rounded-lg p-5 w-full">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-semibold text-gray-800">Your Balance</h2>
+                <span className="text-sm font-semibold bg-green-500 text-white py-1 px-3 rounded-full">Active</span>
+              </div>
+              <p className="text-3xl font-bold text-gray-900">Rs: {userBalanceShow}</p>
+              <div className="flex justify-between mt-6"> {/* Adjusted for better spacing */}
+                <Link to="/recharge">
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Add Balance
+                  </button>
+                </Link>
+                {/* This div is used to provide flexible spacing */}
+                <div className="flex-grow"></div>
+                <Link to="/withdraw">
+                  <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                    Withdraw
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
-          {/* <div className="bg-gray-700 text-xs font-medium p-2 rounded-lg">
-            <p className="text-green-500">+ $249.41 (5.40%)</p>
-            <p className="text-gray-400">vs. previous week (20-27th Sep)</p>
-          </div> */}
-        </div>
-
-        {showController && (
-          <div className="bg-gray-700 text-xs font-medium p-2 rounded-lg">
-          <p className="text-green-500"></p>
-          <p className="text-gray-400">Recharge your balance</p>
-        </div>
-        )}
-      </div>
+        </>
+      );
       
-    );
+      
 };
 
 export default UserBalance;

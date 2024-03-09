@@ -11,20 +11,27 @@ import { parseISO } from 'date-fns';
 
 const ExpiredNotice = () => {
   return (
-    <div className="timer">
-      <h1>timer</h1>
+    <div className="timer flex items-center justify-center bg-purple-700 p-4 rounded-lg shadow-xl">
+      <h1 className="text-3xl font-bold text-white">Next Round</h1>
     </div>
+
   );
 };
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
+
+  const safeMinutes=Number(minutes) || 0;
+  const safeSeconds=Number(seconds) || 0;
   return (
-    <div className="timer-display">
-      <span className="text-5xl font-bold">{minutes}</span>
-      <span className="text-5xl font-bold">:</span>
-      <span className="text-5xl font-bold">{seconds}</span>
+    <div className="timer-display flex items-center justify-center bg-purple-700 p-4 rounded-lg shadow-xl">
+      <span className="text-5xl font-bold text-white">{safeMinutes}</span>
+      <span className="text-5xl font-bold text-gray-300 mx-2">:</span>
+      <span className="text-5xl font-bold text-white">{safeSeconds}</span>
     </div>
   );
+  
+  
+  
 };
 
 const Timer = ({
@@ -98,27 +105,38 @@ const Timer = ({
     }
   }, [minutes, seconds, user, balanceUpdated]);
 
-  if (minutes === 0 && seconds < 2) {
-    setUserEntries([]);
-    setLose([]);
-    setWin([]);
-  }
-  if ((minutes === 0 && seconds < 10) && (!loading)&&( !isNaN(minutes)) &&(!isNaN(seconds))) {
-    setShowResult(true);
-  } else {
-    setShowResult(false);
-  }
+  // Reset entries, wins, and losses
+  useEffect(() => {
+    if (minutes === 0 && seconds < 2) {
+      setUserEntries([]);
+      setLose([]);
+      setWin([]);
+    }
+  }, [minutes, seconds, setUserEntries, setLose, setWin]);
 
-  if ((minutes === 0 && seconds < 40) && (!loading)&&( !isNaN(minutes)) &&(!isNaN(seconds))) {
-    setBtnOff(true);
-  } else {
-    setBtnOff(false);
-  }
-  if ((minutes === 0 && seconds < 25 && seconds !==0 && seconds !==1 ) && (!loading) &&( !isNaN(minutes)) &&(!isNaN(seconds))) {
-    setShowDisplayNum(true);
-  } else {
-    setShowDisplayNum(false);
-  }
+
+   // Show or hide result
+  useEffect(() => {
+    setShowResult((minutes === 0 && seconds < 10) && !loading && !isNaN(minutes) && !isNaN(seconds));
+  }, [minutes, seconds, loading, setShowResult]);
+
+
+  // Enable or disable button
+  useEffect(() => {
+    setBtnOff((minutes === 0 && seconds < 40) && !loading && !isNaN(minutes) && !isNaN(seconds));
+  }, [minutes, seconds, loading, setBtnOff]);
+
+  useEffect(() => {
+    // Ensure this logic runs only when specific dependencies change
+    if ((minutes === 0 && seconds < 25 && seconds !== 0 && seconds !== 1) && (!loading) && (!isNaN(minutes)) && (!isNaN(seconds))) {
+      setShowDisplayNum(true);
+    } else {
+      setShowDisplayNum(false);
+    }
+  
+    // Replicate for other state updates (setBtnOff, setShowResult, etc.)
+  }, [minutes, seconds, loading]); // Add other dependencies as needed
+  
 
   if (days + hours + minutes + seconds <= 0) {
     return <ExpiredNotice />;
