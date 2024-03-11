@@ -27,21 +27,42 @@ const Withdraw = ({ userId }) => {
       setMessage('Withdrawal amount exceeds your balance.');
       return false;
     }
+    
+    const userRef = doc(db, "Customers", user.uid);
+  
     try {
-      const updatedBalance = userBalance - withdrawAmount;
-      const userRef = doc(db, "Customers", user.uid);
-      await updateDoc(userRef, {
-        userBalance: updatedBalance,
-        withdraw: withdrawAmount,
-        GPaynumber: phoneNumber
-      });
-      setUserBalance(updatedBalance);
+      // Fetch the current document to get the current withdraw value
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        // Get the current withdraw value, default to 0 if it doesn't exist
+        const currentWithdraw = docSnap.data().withdraw || 0;
+        // Calculate the new withdraw total
+        const newWithdrawTotal = currentWithdraw + withdrawAmount;
+  
+        // Calculate the updated balance
+        const updatedBalance = userBalance - withdrawAmount;
+  
+        // Update Firestore with the new balance and new withdraw total
+        await updateDoc(userRef, {
+          userBalance: updatedBalance,
+          withdraw: newWithdrawTotal,
+          GPaynumber: phoneNumber
+        });
+  
+        // Update local state to reflect the new balance
+        setUserBalance(updatedBalance);
+        setMessage('Withdrawal successful. Your balance has been updated.');
+      } else {
+        console.log("No such document!");
+      }
       return true;
     } catch (error) {
       console.error('Transaction failed: ', error);
+      setMessage('Failed to withdraw. Please check your withdrawal amount.');
       return false;
     }
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();

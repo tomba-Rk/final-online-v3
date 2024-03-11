@@ -54,7 +54,8 @@ const Login = () => {
           userBalance: 0,
           referralLink: referralLink || "" ,
           recharge:0,
-          award:0
+          award:0,
+          refer:false,
   
         });
   
@@ -65,7 +66,6 @@ const Login = () => {
             newUser: result.user.uid,
             referralId: referralId
           });
-          
         }
       }
   

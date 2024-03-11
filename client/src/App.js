@@ -4,6 +4,10 @@ import Dashboard from './pages/Dashboard';
 import Withdraw from './components/Withdraw/Withdraw';
 import UserProfile from './components/UserProfile/UserProfile';
 import PhotoRecharge from './components/PhotoRecharge/PhotoRecharge';
+import GoRule from './components/PrincipleRule/GoRule';
+import GameRule from './components/PrincipleRule/GameRule';
+import ReferralRule from './components/PrincipleRule/ReferralRule';
+import RewardRule from './components/PrincipleRule/RewardRule';
 
 function App() {
   return (
@@ -16,6 +20,10 @@ function App() {
           <Route path="/withdraw" element={<Withdraw/>} />
           <Route path="/recharge" element={<PhotoRecharge/>} />
           <Route path="/userprofile" element={<UserProfile/>} />
+          <Route path="/rule" element={<GoRule/>} />
+          <Route path="/game" element={<GameRule/>} />
+          <Route path="/refer" element={<ReferralRule/>} />
+          <Route path="/reward" element={<RewardRule/>} />
         </Routes>
       </div>
     </div>

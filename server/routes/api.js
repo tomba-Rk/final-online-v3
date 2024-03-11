@@ -17,8 +17,10 @@ router.post('/create-referral', async (req, res) => {
   const referralId = shortid.generate();
 
   const userRef = db.collection('users').doc(userId);
+  //i have added rewardGiven from the recharge endpoint
   await userRef.set({
       referralId: referralId,
+      rewardGiven:false,
       referrals: []
   });
 
@@ -26,44 +28,97 @@ router.post('/create-referral', async (req, res) => {
   // res.json({ referralLink:  `http://localhost:3000/signup?ref=${referralId}`});
 });
 
-
-// Endpoint to verify a referral and update the user balance
+// Endpoint to verify referral information and link the new user to the referrer.
 router.post('/verifyReferral', async (req, res) => {
+  // Extract newUser and referralId from the request body.
   const { newUser, referralId } = req.body;
 
-  if (!newUser || !referralId) {
-    return res.status(400).send('Both newUser and referralId are required');
+  console.log("hello testig for referral");
+  // Query the 'users' collection for a document with a matching referralCode.
+  const referrerSnapshot = await db.collection('users').where('referralId', '==', referralId).get();
+
+  if (!referrerSnapshot.empty) {
+    // If a matching referrer is found, extract their UID.
+    const referrerId = referrerSnapshot.docs[0].id;
+
+    console.log("hello testig for referral inside the code");
+    // Update the new user's document to include 'referredBy' field pointing to the referrer's UID.
+    // This links the new user (User B) to the referrer (User A).
+    await db.collection('users').doc(newUser).set({
+      referredBy: referrerId,
+    }, { merge: true });
+
+    // Send a success response indicating the referral link verification and linking process was successful.
+    res.send('Signup successful with referral');
+  } else {
+    // If no matching referrer is found, send an error response indicating the referral code is invalid.
+    res.status(400).send('Invalid referral code');
   }
+});
+
+
+
+
+// POST endpoint to process a recharge action.
+// Requires 'userId' and 'amount' in the request body.
+router.post('/recharge', async (req, res) => {
+  // Extract userId and amount from the request body.
+  const { userId, amount } = req.body;
+  
+  // Define the minimum recharge amount that qualifies for a reward.
+  const minimumRechargeAmountForReward = 100;
 
   try {
-    // Find the user who owns the referral ID
-    const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('referralId', '==', referralId).get();
+    // Retrieve the document for the user (User B) who is recharging.
+    const userDoc = await db.collection('users').doc(userId).get();
 
-    if (snapshot.empty) {
-      return res.status(404).send('Referral ID not found');
+    // Check if the user document exists.
+    if (!userDoc.exists) {
+      return res.status(404).send('User not found');
     }
 
-    console.log(snapshot);
-    let referrerUserId;
-    snapshot.forEach(doc => {
-      referrerUserId = doc.id;
-    });
+    const user = userDoc.data();
 
-    // Update the referrer's balance
-    const referrerRef = db.collection('Customers').doc(referrerUserId);
-    console.log("referrerRef ",referrerRef);
-    // const updatedBalance = currentBalance + increaseAmount;
-    console.log("referal",referrerRef);
-    await referrerRef.update({
-      userBalance:admin.firestore.FieldValue.increment(100),
-      award:admin.firestore.FieldValue.increment(100),
-    },{ merge: true });
+    // Check if the recharge amount meets the minimum threshold, if the user was referred,
+    // and if the reward for this specific referral has not already been given.
+    if (amount >= minimumRechargeAmountForReward && user.referredBy && !user.rewardGiven) {
+      // Fetch the referrer's (User A) document from Firestore using the 'referredBy' field.
+      //i change this code from user to customer
+      const referrerDoc = await db.collection('Customers').doc(user.referredBy).get();
 
-    res.status(200).send(`Referral verified. User balance updated for user ID: ${referrerUserId}`);
+      if (referrerDoc.exists) {
+        // If the referrer exists, update their rewards.
+        // This example increments the referrer's rewards by 50 units.
+        await db.collection('Customers').doc(user.referredBy).update({
+          award: admin.firestore.FieldValue.increment(50), // Update the rewards field with the new reward amount.
+          userBalance:admin.firestore.FieldValue.increment(50), // Update the rewards field with the new reward amount.
+        });
+
+        // Update the referred user's (User B) document to indicate that the reward for this referral has been given.
+        // This prevents rewarding the referrer multiple times for the same referral.
+         //i change this code from user to customer for i want to add this rewardgiven property 
+         //to the customer collection
+         //sorry i change my mind i have added rewardgiven in the create-referral
+        await db.collection('users').doc(userId).update({
+          rewardGiven: true
+        });
+
+        // Send a success response indicating that the recharge was successful and the referrer has been rewarded.
+        res.send('Recharge successful, referrer rewarded.');
+      } else {
+        // Handle the case where the referrer's document does not exist.
+        res.status(404).send('Referrer not found');
+      }
+    } else {
+      // If the conditions for rewarding are not met, process the recharge without rewarding.
+      // This could happen if the amount is less than the required minimum,
+      // the user was not referred, or the reward has already been given.
+      res.send('Recharge successful, conditions for rewarding not met.');
+    }
   } catch (error) {
-    console.error('Error verifying referral:', error);
-    res.status(500).send('Internal Server Error');
+    // Catch and handle any errors that occur during the process.
+    console.error('Error processing recharge:', error);
+    res.status(500).send('Error processing recharge');
   }
 });
 

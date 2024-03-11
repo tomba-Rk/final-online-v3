@@ -107,7 +107,7 @@ const Timer = ({
 
   // Reset entries, wins, and losses
   useEffect(() => {
-    if (minutes === 0 && seconds < 2) {
+    if (minutes === 0 && seconds < 4) {
       setUserEntries([]);
       setLose([]);
       setWin([]);
