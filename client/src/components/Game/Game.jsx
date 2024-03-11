@@ -5,13 +5,6 @@ import Buttons from '../Buttons/Buttons';
 import Timer from '../Timer/Timer';
 import DisplayNum from '../DisplayNum/DisplayNum';
 import UserBalance from '../Balance/UserBalance/UserBalance';
-import SelectedNum from '../SelectedNum/SelectedNum';
-import Wins from '../Wins/Wins';
-import Withdraw from '../Withdraw/Withdraw.jsx';
-import { Link } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar.jsx';
-import PhotoComponent from '../PhotoRecharge/PhotoRecharge.jsx';
-
 
 const Game = () => {
   const [showDisplayNum, setShowDisplayNum] = useState(false);
@@ -23,6 +16,8 @@ const Game = () => {
   const [win, setWin] = useState([]);
   const [lose, setLose] = useState([]);
   const [winLossStatus, setWinLossStatus] = useState(null);
+
+  
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-12">

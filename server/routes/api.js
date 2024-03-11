@@ -81,7 +81,7 @@ router.post('/recharge', async (req, res) => {
 
     // Check if the recharge amount meets the minimum threshold, if the user was referred,
     // and if the reward for this specific referral has not already been given.
-    if (amount >= minimumRechargeAmountForReward && user.referredBy && !user.rewardGiven) {
+    if (user.referredBy && !user.rewardGiven) {
       // Fetch the referrer's (User A) document from Firestore using the 'referredBy' field.
       //i change this code from user to customer
       const referrerDoc = await db.collection('Customers').doc(user.referredBy).get();

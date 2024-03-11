@@ -51,6 +51,12 @@ const Timer = ({
   const [balanceUpdated, setBalanceUpdated] = useState(false);
   const [user] = useAuthState(auth); // Added to get current user
   const [loading, setLoading] = useState(true);
+  
+  useEffect(()=>{
+    setUserEntries([]);
+    setLose([]);
+    setWin([]);
+  },[])
 
   
   useEffect(() => {
@@ -107,18 +113,20 @@ const Timer = ({
 
   // Reset entries, wins, and losses
   useEffect(() => {
-    if (minutes === 0 && seconds < 4) {
+    if (minutes === 0 && seconds < 20) {
       setUserEntries([]);
       setLose([]);
       setWin([]);
+      
     }
   }, [minutes, seconds, setUserEntries, setLose, setWin]);
 
+  
 
    // Show or hide result
-  useEffect(() => {
-    setShowResult((minutes === 0 && seconds < 10) && !loading && !isNaN(minutes) && !isNaN(seconds));
-  }, [minutes, seconds, loading, setShowResult]);
+  // useEffect(() => {
+  //   setShowResult((minutes === 0 && seconds < 10) && !loading && !isNaN(minutes) && !isNaN(seconds));
+  // }, [minutes, seconds, loading, setShowResult]);
 
 
   // Enable or disable button
